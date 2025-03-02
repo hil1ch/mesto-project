@@ -1,6 +1,9 @@
+import { jobInput, nameInput, profileTitle, profileDescription } from "../index.js";
 const popups = document.querySelectorAll('.popup');
 
 export function openModal(popup) {
+   nameInput.value = profileTitle.textContent;
+   jobInput.value = profileDescription.textContent;
    document.addEventListener('keydown', closeByEscape);
    popup.classList.add("popup_is-opened");
 }
@@ -14,7 +17,7 @@ export function closeModal(popup) {
 export function closeByEscape(evt) {
    if (evt.key === 'Escape') {
       const openedPopup = document.querySelector('.popup_is-opened');
-      closePopup(openedPopup);
+      closeModal(openedPopup);
    }
 }
 
@@ -25,7 +28,7 @@ popups.forEach((popup) => {
          evt.target.classList.contains('popup') ||
          evt.target.classList.contains('popup__close')
        ) {
-         closePopup(popup);
+         closeModal(popup);
        }
    });
 })

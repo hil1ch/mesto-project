@@ -1,10 +1,27 @@
 // index.js
 import '../pages/index.css';
 
-const placesList = document.querySelector(".places__list");
+import { createCard } from './components/card';
+import { openModal, closeModal } from './components/modal';
+import { enableValidation} from './components/validate';
+
 const profilePopup = document.querySelector(".popup_type_edit");
 const cardPopup = document.querySelector(".popup_type_new-card");
-const imagePopup = document.querySelector(".popup_type_image");
+export const imagePopup = document.querySelector(".popup_type_image");
+
+//Функция открытия модальных окон
+const profileFormElement = profilePopup.querySelector(".popup__form");
+
+export const nameInput = document.querySelector(".popup__input_type_name");
+export const jobInput = document.querySelector(".popup__input_type_description");
+
+export const profileTitle = document.querySelector(".profile__title");
+export const profileDescription = document.querySelector(".profile__description");
+
+// Добавление новой карточки
+const cardFormElement = cardPopup.querySelector(".popup__form");
+const inputNameForm = cardPopup.querySelector(".popup__input_type_card-name");
+const inputUrlForm = cardPopup.querySelector(".popup__input_type_url");
 
 const initialCards = [
   {
@@ -33,66 +50,9 @@ const initialCards = [
   },
 ];
 
-// Функция для отображения карточек
-function createCard(card) {
-  const cardTemplate = document.querySelector("#card-template").content;
-  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardTitle = cardElement.querySelector(".card__title");
-
-  cardImage.src = card.link;
-  cardTitle.textContent = card.name;
-
-  // Лайк на карточки
-  cardElement
-    .querySelector(".card__like-button")
-    .addEventListener("click", (evt) => {
-      evt.target.classList.toggle("card__like-button_is-active");
-    });
-
-  // Удаление карточки
-  cardElement
-    .querySelector(".card__delete-button")
-    .addEventListener("click", () => {
-      cardElement.remove();
-    });
-
-  // Открытие попапа с картинкой
-  cardElement.querySelector(".card__image").addEventListener("click", () => {
-    imagePopup.querySelector(".popup__image").src = card.link;
-    imagePopup.querySelector(".popup__caption").textContent = card.name;
-    openModal(imagePopup);
-  });
-
-  placesList.append(cardElement);
-
-  return cardElement;
-}
-
 initialCards.forEach((card) => {
   createCard(card);
 });
-
-//Функция открытия модальных окон
-const profileFormElement = profilePopup.querySelector(".popup__form");
-
-const nameInput = document.querySelector(".popup__input_type_name");
-const jobInput = document.querySelector(".popup__input_type_description");
-
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
-
-// function openModal(popup) {
-//   nameInput.value = profileTitle.textContent;
-//   jobInput.value = profileDescription.textContent;
-//   popup.classList.add("popup_is-opened");
-// }
-
-//Функция зыкрытия модальных окон
-// function closeModal(popup) {
-//   popup.classList.remove("popup_is-opened");
-// }
 
 // Открытие попапа редактирования профиля
 const profileButton = document.querySelector(".profile__edit-button");
@@ -134,11 +94,6 @@ cardClosePopup.addEventListener("click", () => {
   closeModal(cardPopup);
 });
 
-// Добавление новой карточки
-const cardFormElement = cardPopup.querySelector(".popup__form");
-const inputNameForm = cardPopup.querySelector(".popup__input_type_card-name");
-const inputUrlForm = cardPopup.querySelector(".popup__input_type_url");
-
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
@@ -161,3 +116,19 @@ const imagePopupClose = imagePopup.querySelector('.popup__close');
 imagePopupClose.addEventListener('click', () => {
   closeModal(imagePopup);
 });
+
+// Создание объекта с настройками валидации
+
+const validationSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+
+enableValidation(validationSettings);
