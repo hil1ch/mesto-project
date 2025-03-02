@@ -83,16 +83,16 @@ const jobInput = document.querySelector(".popup__input_type_description");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
-function openModal(popup) {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileDescription.textContent;
-  popup.classList.add("popup_is-opened");
-}
+// function openModal(popup) {
+//   nameInput.value = profileTitle.textContent;
+//   jobInput.value = profileDescription.textContent;
+//   popup.classList.add("popup_is-opened");
+// }
 
 //Функция зыкрытия модальных окон
-function closeModal(popup) {
-  popup.classList.remove("popup_is-opened");
-}
+// function closeModal(popup) {
+//   popup.classList.remove("popup_is-opened");
+// }
 
 // Открытие попапа редактирования профиля
 const profileButton = document.querySelector(".profile__edit-button");
